@@ -1,5 +1,5 @@
 const http = require('http');
-var fs = require('fs');
+const fs = require('fs');
 const url = require('url');
 const passport = require('passport');
 const express = require('express');
@@ -7,9 +7,11 @@ const app = express();
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const route = require('./routes/index')(app);
+const route = require('./routes/index')(app, fs);
 const controller = require('./controllers/controller');
 var Schema = mongoose.Schema;
+var flash = require('connect-flash');
+app.use(flash());
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -25,6 +27,7 @@ db.on('error',console.error.bind(console,'connection error:'));
 db.once('open',function(callback){
   console.log("MongoDB connected,,,")
 });
+
 require('./passport')(passport);
 
 app.use(passport.initialize());
@@ -47,38 +50,16 @@ newMember.save(function(err){
   else console.log("success");
 });
 */
+/*
 Member.findOne({id:'bee'}, function(err, docs){
   console.log(docs);
 });
+*/
+controller.findOne({id:'bee'}, function(err, docs){
+  console.log(docs);
+});
 
+//Server run
 var server = app.listen(3000, function(){
   console.log('Server running ');
 });
-// Server 생성(?)
-/*
-http.createServer(function(req, res){
-  var pathname = url.parse(req.url).pathname;
-
-  console.log("Request for " + pathname + " received.");
-
-  //app.use('/', route);
-  if(pathname=="/"){
-    pathname = "/login.html";
-    console.log("go "+pathname);
-  }
-  app.get('/', function(req, res){
-    res.send('Hello World');
-  });
-
-  fs.readFile(pathname.substr(1), function(err, data){
-    if(err){
-      console.log(err);
-    }else{
-      res.writeHead(200, {'Content-Type':'text/html'});
-      res.write(data.toString());
-    }
-
-    res.end();
-  });
-}).listen(3000);
-*/
