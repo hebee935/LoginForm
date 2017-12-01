@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>login.html</title>
+    <style>
+    form{
+      position: absolute;
+      width: 400px;
+      height: 150px;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      margin: auto;
+    }
+    </style>
+  </head>
+  <body>
+    <form class="loginForm" action="/logined" method="post">
+      <fieldset>
+        <legend>Login</legend>
+        <table>
+          <tr>
+            <td><label for="pushID">ID</label></td>
+            <td><input type="text" id="pushID" name="pushID"></td>
+          </tr>
+          <tr>
+            <td><label for="pushPW">PW</label></td>
+            <td><input type="password" id="pushPW" name="pushPW"></td>
+          </tr>
+        </table>
+        <input type="submit" value="Sign in">
+        <input type="button" value="Sign up" id="signUp">
+      </fieldset>
+    </form>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script>
+
+jQuery(function($){
+  $(".loginForm").validate({
+    rules:{
+      pushID: "required",
+      pushPW: "required"
+    },
+    messages: {
+      pushID: "  ID를 입력해주세요.",
+      pushPW: "  PW를 입력해주세요."
+    }
+  });
+
+  $('#signUp').click(function(){
+    location.href="join.html";
+  });
+  $('.loginForm').submit(function(){
+    isLoggedIn($(this));
+  });
+
+  function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+      return next();
+    }else{
+      res.redirect('/login');
+    }
+  }
+});
+
+
+</script>
+  </body>
+</html>

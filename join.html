@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>join.html</title>
+    <style>
+    form{
+      position: absolute;
+      width: 450px;
+      height: 200px;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      margin: auto;
+    }
+    </style>
+  </head>
+  <body>
+    <form class="joinForm" action="login.html" method="post">
+      <fieldset>
+        <legend>Join</legend>
+        <table>
+          <tr>
+            <td><label for="pushNAME">NAME</label></td>
+            <td><input type="text" id="pushNAME" name="pushNAME"></td>
+          </tr>
+          <tr>
+            <td><label for="pushID">ID</label></td>
+            <td><input type="text" id="pushID" name="pushID">
+            <input type="button" id="checkID" value="중복확인"></td>
+          </tr>
+          <tr>
+            <td><label for="pushPW">PW</label></td>
+            <td><input type="password" id="pushPW" name="pushPW"></td>
+          </tr>
+          <tr>
+            <td><label for="repushPW">RE:PW</label></td>
+            <td><input type="password" id="repushPW" name="repushPW"></td>
+          </tr>
+        </table>
+        <input type="submit" value="Sign up">
+        <input type="button" value="Cancel" id="cancel">
+      </fieldset>
+    </form>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script>
+
+    jQuery(function($){
+
+      $(".joinForm").validate({
+        rules:{
+          pushNAME: "required",
+          pushID: "required",
+          pushPW: "required",
+          repushPW: {
+            required: true,
+            equalTo: pushPW
+          }
+        },
+        messages: {
+          pushNAME: "이름을 입력해주세요.",
+          pushID: "  ID를 입력해주세요.",
+          pushPW: "  PW를 입력해주세요.",
+          repushPW:{
+            required: "PW를 재입력해주세요.",
+            equalTo: "두 패스워드가 일치하지 않습니다."
+          }
+        }
+      });
+
+      doCheckID = 0;
+      $('#pushID').change(function(){
+        doCheckID = 0;
+      });
+      $('#checkID').click(function(){
+        alert("중복확인체크");
+        doCheckID = 1;
+      });
+      $('.joinForm').submit(function(){
+        if(doCheckID==0 && $('#pushID').val()!=""){
+          alert("ID 중복 체크를 해주세요.");
+          $('#pushID').focus();
+          return false;
+        }else{
+
+        }
+      });
+      $('#cancel').click(function(){
+        location.href="login.html";
+      })
+    });
+
+    </script>
+  </body>
+</html>
