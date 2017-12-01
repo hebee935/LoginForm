@@ -17,7 +17,7 @@
     </style>
   </head>
   <body>
-    <form class="loginForm" action="/logined" method="post">
+    <form class="loginForm" action="/loggedIn" method="post">
       <fieldset>
         <legend>Login</legend>
         <table>
@@ -53,19 +53,11 @@ jQuery(function($){
   });
 
   $('#signUp').click(function(){
-    location.href="join.html";
+    location.href="/signup";
   });
   $('.loginForm').submit(function(){
     isLoggedIn($(this));
   });
-
-  function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-      return next();
-    }else{
-      res.redirect('/login');
-    }
-  }
 });
 
 

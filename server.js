@@ -7,12 +7,17 @@ const app = express();
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const route = require('./routes/index');
+const route = require('./routes/index')(app);
+const controller = require('./controllers/controller');
 var Schema = mongoose.Schema;
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
+app.set('views', __dirname + '/views');
+//ejs engine setting
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 // DB연동
 mongoose.connect('localhost/test');
 var db = mongoose.connection;
@@ -46,7 +51,11 @@ Member.findOne({id:'bee'}, function(err, docs){
   console.log(docs);
 });
 
+var server = app.listen(3000, function(){
+  console.log('Server running ');
+});
 // Server 생성(?)
+/*
 http.createServer(function(req, res){
   var pathname = url.parse(req.url).pathname;
 
@@ -57,8 +66,8 @@ http.createServer(function(req, res){
     pathname = "/login.html";
     console.log("go "+pathname);
   }
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'login.html'));
+  app.get('/', function(req, res){
+    res.send('Hello World');
   });
 
   fs.readFile(pathname.substr(1), function(err, data){
@@ -72,8 +81,4 @@ http.createServer(function(req, res){
     res.end();
   });
 }).listen(3000);
-
-console.log('Server running ');
-
-var flash = require('connect-flash');
-app.use(flash());
+*/
