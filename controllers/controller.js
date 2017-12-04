@@ -1,11 +1,16 @@
 const mongodb = require('../db');
 const Member = require('../model/member');
 
-mongodb();
-exports.findOne = function(query, cb){
-  //var member = mongodb.db.collection('member');
-  Member.find(query), function(err, results){
-    console.log(results)
-    return cb(null, results[0]);
-  };
+exports.authLogin = function(model, query, callback){
+  model.find(query, function(err, results){
+    if(err){
+      callback(err, null);
+      return;
+    }
+    if(results.length > 0){
+      callback(null,results);
+    }else{
+      
+    }
+  });
 }

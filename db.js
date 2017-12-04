@@ -1,18 +1,20 @@
+/*
 const mongoose = require('mongoose');
-var db;
+mongoose.Promise = global.Promise;
+var Schema = mongoose.Schema;
 
-module.exports = () =>{
+mongoose.connect('localhost/test');
+var db = mongoose.connection;
+db.on('error',console.error.bind(console,'connection error:'));
+db.once('open',function(callback){
+  console.log("MongoDB connected,,,")
+});
 
-  function connect(){
-    mongoose.connect('localhost:27017', function(err){
-      if(err){
-        console.error("에러",err);
-      }
-      console.log("연결성공");
-    });
-  }
-  connect();
-  //mongoose.connection.on('disconnected',connect);
-  require('./model/member');
+var memberSchema = new Schema({
+  'name': String,
+  'id': String,
+  'pw': String
+});
 
-};
+exports.Member = mongoose.model('member', memberSchema);
+*/
