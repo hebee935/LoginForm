@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
+const controller = require('../controllers/controller');
 const flash = require('connect-flash');
 
 
@@ -17,9 +17,5 @@ module.exports = function(app, fs){
     res.render('index', { messages: req.flash('info') });
     res.redirect("/");
   });
-  app.get('/list', function(req, res){
-    fs.readFile(__dirname + "/../data/" + "member.json", 'utf8', function(err, data){
-      res.end(data);
-    });
-  });
+
 }

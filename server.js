@@ -33,6 +33,14 @@ app.use('/', router);
 //Server run
 var server = app.listen(3000, function(){
   console.log('Server running ');
+
+  controller.printList({},function(err, results){
+    if(err){
+      console.log("fail");
+      return;
+    }
+    console.log(results);
+  });
 });
 
 router.route('/loginCheck').post(function(req, res){
@@ -42,7 +50,6 @@ router.route('/loginCheck').post(function(req, res){
     controller.authLogin({"id":id, "pw":pw}, function(err, results){
       if(err){
         console.log("fail");
-        console.log(err);
         return;
       }
       if(results.length > 0){
@@ -74,6 +81,20 @@ router.route('/').get(function(req, res){
   }else{
     res.render('home.html');
   }
+});
+router.route('/joinCheck').post(function(req, res){
+  console.log('loginCheck');
+  controller.authLogin({'id': req.body.data}, function(err, results){
+    if(err){
+      console.log("fail");
+      return;
+    }
+    if(results.length > 0){
+      res.send('False');
+    }else{
+      res.send('True');
+    }
+  });
 });
 
 router.route('/joinOK').post(function(req, res){

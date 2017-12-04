@@ -32,3 +32,17 @@ exports.addMember = function(name, id, pw, callback){
     } 
   });
 }
+
+exports.printList = function(query, callback){
+  Member.find(query, function(err, results){
+    if(err){
+      callback(err, null);
+      return;
+    }
+    if(results.length > 0){
+      callback(null,results);
+    }else{
+      callback(null, 0);
+    }
+  });
+}

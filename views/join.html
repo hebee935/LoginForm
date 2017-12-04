@@ -77,8 +77,15 @@
         doCheckID = 0;
       });
       $('#checkID').click(function(){
-        alert("중복확인체크");
-        doCheckID = 1;
+        $.post('/joinCheck', {data: $('#pushID').val()}, function(data){
+          if(data=='False'){
+            doCheckID = 0;
+            alert('이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요.');
+          }else{
+            doCheckID = 1;
+            alert('해당 아이디를 사용할 수 있습니다.');
+          }
+        });
       });
       $('.joinForm').submit(function(){
         if(doCheckID==0 && $('#pushID').val()!=""){
