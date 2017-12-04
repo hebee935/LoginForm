@@ -7,7 +7,6 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const route = require('./routes/index')(app, fs);
 const controller = require('./controllers/controller');
-const Schema = mongoose.Schema;
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
 var router = express.Router();
