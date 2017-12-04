@@ -11,6 +11,7 @@ module.exports = function(passport){
       done(null, member);
     });
   });
+
   /*
   passport.use(new LocalStrategy({
     id:'id',

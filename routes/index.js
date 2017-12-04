@@ -6,6 +6,9 @@ var flash = require('connect-flash');
 module.exports = function(app, fs){
   app.use(flash());
   app.get('/', function(req, res){
+    res.render('home.html');
+  });
+  app.get('/login', function(req, res){
     res.render('login.html');
   });
   app.get('/signup', function(req, res){
