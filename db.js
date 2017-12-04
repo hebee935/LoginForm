@@ -16,5 +16,5 @@ var memberSchema = new Schema({
   'pw': String
 });
 
-exports.Member = mongoose.model('member', memberSchema);
+var Member = mongoose.model('member', memberSchema);
 */

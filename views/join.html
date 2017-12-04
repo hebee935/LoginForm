@@ -17,7 +17,7 @@
     </style>
   </head>
   <body>
-    <form class="joinForm" action="/joinCheck" method="post">
+    <form class="joinForm" action="/joinOk" method="post">
       <fieldset>
         <legend>Join</legend>
         <table>
@@ -85,8 +85,6 @@
           alert("ID 중복 체크를 해주세요.");
           $('#pushID').focus();
           return false;
-        }else{
-
         }
       });
       $('#cancel').click(function(){

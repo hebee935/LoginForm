@@ -20,18 +20,14 @@ var router = express.Router();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 app.set('views', __dirname + '/views');
 //ejs engine setting
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-/*
-
-require('./passport')(passport);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-*/
 
 app.use(cookieParser());
 app.use(session({
@@ -84,24 +80,29 @@ router.route('/loginCheck').post(function(req, res){
         }
         res.render('loginCheck.html',{name:req.session.member.name});
       }else{
-        
+        console.log("login Fail");
+        res.send('<script type="text/javascript">alert("아이디나 패스워드가 잘못되었습니다."); location.href="/login"</script>');
       }
     });
-  }else{
-    res.render('login.html');
   }
 });
 
-/*
-router.route('/loginCheck').post(passport.authenticate('local', {
-  successRedirect: '/loginCheck.html',
-  failureRedirect:'/login.html',
-  failureFlash:true
-}));
-*/
+router.route('/logOut').get(function(req, res){
+  req.session.destroy(function(err){
+    if(err) throw err;
+    res.render('logOut.html');
+  });
+});
 
-router.route('/joinCheck').post(function(req, res){
+router.route('/').get(function(req, res){
+  if(req.session.member){
+    res.render('loginCheck.html',{name:req.session.member.name});
+  }else{
+    res.render('home.html');
+  }
+});
 
+router.route('/joinOK').post(function(req, res){
   var newMember = new Member();
   newMember.name = req.body.pushNAME;
   newMember.id = req.body.pushID;
@@ -110,13 +111,5 @@ router.route('/joinCheck').post(function(req, res){
     if(err) console.log("fail");
     else console.log("success");
   });
-  
-  res.render('joinCheck.html');
-});
-
-router.route('/logOut').get(function(req, res){
-  req.session.destroy(function(err){
-    if(err) throw err;
-    res.render('logOut.html');
-  });
+  res.send('<script type="text/javascript">alert("회원가입에 성공했습니다. 로그인화면으로 이동합니다.");location.href="/login"</script>');
 });

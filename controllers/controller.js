@@ -10,7 +10,7 @@ exports.authLogin = function(model, query, callback){
     if(results.length > 0){
       callback(null,results);
     }else{
-      
+      callback(null, 0);
     }
   });
 }

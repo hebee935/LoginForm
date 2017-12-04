@@ -4,6 +4,8 @@
   "description": "",
   "main": "db.js",
   "dependencies": {
+    "alert": "^1.0.0",
+    "alert-node": "^0.2.1",
     "app": "^0.1.0",
     "configure": "0.0.1",
     "connect-flash": "^0.1.1",

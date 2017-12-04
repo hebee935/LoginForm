@@ -1,13 +1,11 @@
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
-var flash = require('connect-flash');
+const flash = require('connect-flash');
+
 
 module.exports = function(app, fs){
   app.use(flash());
-  app.get('/', function(req, res){
-    res.render('home.html');
-  });
   app.get('/login', function(req, res){
     res.render('login.html');
   });
@@ -48,5 +46,5 @@ module.exports = function(app, fs){
     fs.readFile(__dirname + "/../data/" + "member.json", 'utf8', function(err, data){
       res.end(data);
     });
-  })
+  });
 }
